@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Williams Oleaga</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-13">
+        <h2>#1</h2>
+        <text>Valor : </text>
+        <input id="numero" />
+        <button id="Agregar">Agregar a la lista</button>
+        <button id="Inversa">Imprimir lista inversa</button>
+        <button id="Eliminar">Eliminar de la lista</button>
+        <button id="pares">Numeros pares </button>
+        <button id="EliminarMayor">Eliminar el mayor </button>
+        <button id="verlista">Ver lista</button>
+    </div>
+
+    <div></div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+
+    //para casa funcion del click vamos llamando al controllador y realizamos dicha funcion  - WO
+    $("#Eliminar").click(function () {
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("EliminarEnLista", "Home")',
+    contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify({
+            numero: parseInt(document.getElementById("numero").value)
+        }),
+        success: function (recData) {
+            alert(recData);
+            document.getElementById("numero").value = "";
+        },
+    error: function() { alert('Ingregar un numero a eliminar'); }
+    });
+    });
+
+    $("#Agregar").click(function () {
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("AgregarNumero", "Home")',
+    contentType: "application/json; charset=utf-8",
+        dataType: "json",
+
+        data: JSON.stringify({
+            numero: parseInt(document.getElementById("numero").value)
+        }),
+        success: function (recData) {
+            alert(recData);
+            document.getElementById("numero").value = "";
+
+        },
+    error: function() { alert('A error'); }
+    });
+
+    });
+
+    $("#Inversa").click(function () {
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("ListaInversa", "Home")',
+    contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (recData) {
+            alert(recData);
+        },
+    error: function() { alert('A error'); }
+    });
+
+    });
+    
+
+    $("#pares").click(function () {
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("Pares", "Home")',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+        success: function (recData) {
+            console.log(recData);
+            //console.alert(recData);
+            var numero = "";
+            alert("Numeros pares : " + recData.resultado +" Y el mayor impar de la lista es : " + recData.mayor );
+        },
+    error: function() { alert('A error'); }
+    });
+
+    });
+
+    $("#verlista").click(function () {
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("ObtenerLista", "Home")',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+        success: function (recData) {
+            console.log(recData);
+            //console.alert(recData);
+            var numero = "";
+            alert(recData);
+        },
+    error: function() { alert('A error'); }
+    });
+
+    });
+
+    $("#EliminarMayor").click(function () {
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("EliminarMayor", "Home")',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+        success: function (recData) {
+            console.log(recData);
+            
+            alert("Mayor eliminado de esta lista : " + recData);
+        },
+    error: function() { alert('A error'); }
+    });
+
+    });
+
+
+</script>
